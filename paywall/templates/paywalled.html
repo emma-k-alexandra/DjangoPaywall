@@ -1,0 +1,11 @@
+{% load static %}
+
+<h1>This is paywalled content</h1>
+
+<h2>{{code}}</h2>
+This secret code was loaded via Django's templating system.
+
+<h2 id='ajax_code'></h2>
+This secret code was loaded via AJAX.
+
+<script src="{% static 'js/paywalled.js' %}"></script>

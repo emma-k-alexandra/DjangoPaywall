@@ -1,0 +1,17 @@
+<h1>Login</h1>
+<form action="login" method="POST">
+    {% csrf_token %}
+    <label>
+        <div>Username</div>
+        <input type="text" name="username" id="username">
+    </label>
+    <label>
+        <div>Password</div>
+        <input type="password" name="password" id="password">
+    </label>
+    <div><button type="Submit">Login</button></div>
+</form>
+
+<form action="paywall">
+    <button type='submit'>Attempt to view paywalled content</button>
+</form>
