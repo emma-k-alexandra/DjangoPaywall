@@ -6,6 +6,24 @@ This simple Django app demostrates keeping content behind a login & provides a s
 
 Super basic. Designed to keep users who are not logged in away from certain pages of a website & provides a simple REST API for CRUD operations.
 
+### Notable Flaws
+
+#### Testing
+
+Currently, none of the code is tested via unit, integration or UI tests. In order to push this code to production, automated testing of some kind should be a part of CI/CD solutions.
+
+#### JSON Array Vulnerability
+
+Currently, when  calling `GET`on  `/secret` without any parameters, it returns a JSON array. This can be a [security vulnerability](https://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx/). I chose to return data this way simply because it's easy for basic Django to serialize `Model`s into an array. However, in production this endpoint should return something like
+
+```json
+{
+    "secrets": [...]
+}
+```
+
+In order to avoid this vulnerability. It's not super simple to do with **just** Django's `serialize` module (requires some formating string non-sense, or making your model serializable), which I tried to stick with in this example.
+
 ## Usage
 
 Run
