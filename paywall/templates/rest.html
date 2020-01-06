@@ -1,0 +1,32 @@
+{% load static %}
+
+<h2>{{code}}</h2>
+<p>This secret code was loaded via Django's templating system.</p>
+
+<h2>Output</h2>
+<textarea id='output' style='width: 500px; height: 200px;'></textarea>
+
+<h2>GET</h2>
+<input type='text' id='getCode' placeholder="1000">
+<button onclick='get()'>GET Secret</button>
+
+<h2>POST</h2>
+<input type='text' id='postCode' placeholder="1000">
+<button onclick='post()'>POST new Secret</button>
+
+<h2>PUT</h2>
+<label>
+    From
+    <input type='text' id='fromCode' placeholder="1000">
+</label>
+<label>
+    To
+    <input type='text' id='toCode' placeholder="1001">
+</label>
+<button onclick='put()'>PUT Secret</button>
+
+<h2>DELETE</h2>
+<input type='text' id='deleteCode' placeholder="1000">
+<button onclick='restDelete()'>DELETE Secret</button>
+
+<script src="{% static 'js/rest.js' %}"></script>
