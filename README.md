@@ -38,7 +38,7 @@ DELETE will delete a secret.
 
 The Django admin dashboard is available at
 
-```bash`
+```bash
 localhost:8000/admin
 ```
 
