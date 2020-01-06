@@ -34,6 +34,23 @@ PUT will change a Secret's code from the value in `From` to the value in `To`.
 
 DELETE will delete a secret.
 
+### Admin
+
+The Django admin dashboard is available at
+
+```bash`
+localhost:8000/admin
+```
+
+with the credentials
+
+```bash
+Username: admin
+Password: adminadmin
+```
+
+Secrets are editable under the "Paywall" section.
+
 ### Paywall
 
 Use your browser to navigate to
@@ -46,7 +63,7 @@ You will be presented with a login page. Clicking "Attempt to view paywalled con
 
 ```bash
 Username: admin
-Password: admin
+Password: adminadmin
 ```
 
 Upon a successful login, the paywalled content will appear. This page features two codes (`1234` and `5678`), each of which is loaded in a different way.
@@ -56,8 +73,6 @@ The code `1234` is loaded via Django's templating system. So, it is loaded when 
 The code `5678` is loaded via a `fetch` request to the backend, which returns a JSON document containing the code `5678`. This request to the backend is authenticated and redirects to a login screen if the user sending the request is not authenticated. So, we can load authenticated content at any point.
 
 This pretty much wraps up what the project does. It's just a super simple example of implementing a paywall in Django.
-
-
 
 ## Contact
 
