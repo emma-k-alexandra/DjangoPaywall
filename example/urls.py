@@ -24,5 +24,6 @@ urlpatterns = [
     path('login', paywall.views.login),
     path('paywall', paywall.views.paywalled),
     path('paywall_ajax', paywall.views.paywalled_ajax),
+    path('rest', paywall.views.rest),
     path('secret', paywall.views.secret)
 ]

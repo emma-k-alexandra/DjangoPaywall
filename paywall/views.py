@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Secret
 from .utils import validate_code
@@ -36,6 +37,11 @@ def paywalled_ajax(request):
     secret = Secret(code="5678")
     return JsonResponse({'code': secret.code})
 
+def rest(request):
+    secret = Secret.objects.get(code='1234')
+    return render(request, 'rest.html', {'code': secret.code})
+
+@csrf_exempt
 def secret(request):
     if request.method == 'GET':
         return secret_get(request)
@@ -53,7 +59,25 @@ def secret(request):
         return JsonResponse({'message': 'Invalid method'}, status=400)
 
 def secret_get(request):
-    return HttpResponse(serializers.serialize('json', Secret.objects.all()), content_type='application/json')
+    code = request.GET.get('code')
+
+    if code:
+        valid, error = validate_code(code)
+
+        if valid:
+            try:
+                secret = Secret.objects.get(code=int(code))
+
+            except Secret.DoesNotExist:
+                return JsonResponse({'error': 'Code provided does not exist'}, status=400)
+
+            return JsonResponse({'code': secret.code})
+
+        else:
+            return JsonResponse({'error': f'Provided code is invalid. Error: {error}'}, status=400)
+
+    else:
+        return HttpResponse(serializers.serialize('json', Secret.objects.all()), content_type='application/json')
 
 def secret_post(request):
     post_data = json.loads(request.body)
@@ -98,7 +122,7 @@ def secret_delete(request):
             Secret.objects.get(code=int(code)).delete()
 
         except Secret.DoesNotExist:
-            return JsonResponse({'error': '{code} does not exist.'}, status=400)
+            return JsonResponse({'error': f'{code} does not exist.'}, status=400)
 
         return JsonResponse({'message': f'Deleted secret {code}'})
 
